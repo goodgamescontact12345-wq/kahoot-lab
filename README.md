@@ -4,7 +4,7 @@ A **Kahoot testing utility**: reveal the answers of a quiz, spawn answer bots in
 game, and add/remove points — either against a real Kahoot game PIN or against the
 built-in local Kahoot-compatible test host.
 
-Zero runtime dependencies (Node ≥ 20, built-in `fetch` + WebSocket).
+Zero runtime dependencies (Node ≥ 22, built-in `fetch` + WebSocket).
 
 > **Use it on games you own or have permission to test.** Bots join other people's
 > games as extra participants — run it against your own quizzes (or the local test
