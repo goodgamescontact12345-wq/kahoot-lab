@@ -1,0 +1,27 @@
+{
+  "name": "kahoot-lab",
+  "version": "1.0.0",
+  "description": "Kahoot testing utility: reveal quiz answers, spawn answer bots, and add/remove points while testing Kahoot games (real games or a local Kahoot-compatible test host).",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "kahoot-lab": "bin/kahoot-lab.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "web": "node bin/kahoot-lab.js serve",
+    "build:pages": "node scripts/build-pages.mjs",
+    "test:unit": "node --test test/challenge.test.js test/scoring.test.js test/answers.test.js",
+    "test:e2e": "node --test test/e2e.test.js"
+  },
+  "keywords": [
+    "kahoot",
+    "testing",
+    "bots",
+    "quiz",
+    "cometd"
+  ]
+}

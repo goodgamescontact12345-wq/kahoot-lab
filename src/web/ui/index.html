@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kahoot·lab — testing console</title>
+  <link rel="stylesheet" href="/app.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c5cff'/></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">kahoot<i>·lab</i></span>
+      <span class="brand-sub">testing console</span>
+    </div>
+
+    <div class="pin-box">
+      <label for="pin">Game PIN</label>
+      <input id="pin" inputmode="numeric" autocomplete="off" spellcheck="false"
+             placeholder="1234567" maxlength="12" />
+    </div>
+
+    <div class="top-right">
+      <div class="health" id="health" title="server status">
+        <span class="dot" id="health-dot"></span>
+        <span id="health-text">connecting…</span>
+      </div>
+      <a class="ghost-link" href="/api/health" target="_blank" rel="noreferrer">api</a>
+    </div>
+  </header>
+
+  <main class="grid">
+    <!-- ---------------------------------------------------- test host -->
+    <section class="card" id="host-card">
+      <div class="card-head">
+        <h2>Local test host</h2>
+        <span class="pill" id="host-pill" hidden></span>
+      </div>
+      <p class="hint">Run a Kahoot-compatible game on this machine to test answers, bots and score edits completely offline.</p>
+
+      <div class="row">
+        <label class="grow">
+          <span>Quiz fixture</span>
+          <select id="fixture"></select>
+        </label>
+        <label>
+          <span>Question&nbsp;time&nbsp;(s)</span>
+          <input id="question-time" type="number" min="1" step="1" placeholder="20" />
+        </label>
+        <label>
+          <span>Auto-start&nbsp;(s)</span>
+          <input id="auto-start" type="number" min="0" step="1" value="3" />
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="host-start">Start test host</button>
+        <button class="btn danger" id="host-stop" hidden>Stop</button>
+        <label class="toggle" title="reopen the lobby after every game and start the next one while the room has players">
+          <input type="checkbox" id="host-loop" /> loop
+        </label>
+      </div>
+
+      <div class="host-controls" id="host-controls" hidden>
+        <div class="actions">
+          <button class="btn" data-control="start">▶ Start quiz</button>
+          <button class="btn" data-control="next">⏭ Next</button>
+          <button class="btn" data-control="stop">■ End game</button>
+          <button class="btn ghost" data-control="reset">↺ Reset lobby</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------ answers -->
+    <section class="card" id="answers-card">
+      <div class="card-head">
+        <h2>Reveal answers</h2>
+        <span class="pill" id="answers-pill" hidden></span>
+      </div>
+      <p class="hint">Resolves the quiz behind the PIN (or search by title) and shows every correct answer.</p>
+
+      <div class="row">
+        <label class="grow">
+          <span>Title override <em>(optional)</em></span>
+          <input id="answer-title" placeholder="exact published quiz title" autocomplete="off" />
+        </label>
+        <label>
+          <span>Wait&nbsp;(s)</span>
+          <input id="answer-wait" type="number" min="5" step="5" value="45" />
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="reveal-btn">Reveal answers</button>
+        <button class="btn ghost" id="reveal-clear" hidden>Clear</button>
+      </div>
+
+      <div id="answers-out" class="answers-out" hidden></div>
+    </section>
+
+    <!-- --------------------------------------------------------- bots -->
+    <section class="card" id="bots-card">
+      <div class="card-head">
+        <h2>Answer bots</h2>
+        <span class="pill" id="bots-pill" hidden></span>
+      </div>
+      <p class="hint">Bots join the PIN, resolve the answers and play. Score targets can be set from the scoreboard.</p>
+
+      <div class="row">
+        <label>
+          <span>Count</span>
+          <input id="bot-count" type="number" min="1" max="100" value="3" />
+        </label>
+        <label class="grow">
+          <span>Strategy</span>
+          <select id="bot-strategy">
+            <option value="correct">correct — use revealed answers</option>
+            <option value="random">random — uniform choice</option>
+            <option value="dumb">dumb — always option 1</option>
+            <option value="slow">slow — correct, last moment</option>
+            <option value="skip">skip — never answer</option>
+          </select>
+        </label>
+        <label>
+          <span>Accuracy</span>
+          <input id="bot-accuracy" type="number" min="0" max="1" step="0.05" value="1" />
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="grow">
+          <span>Per-bot strategies <em>(optional, comma separated)</em></span>
+          <input id="bot-strategies" placeholder="correct,dumb,correct" autocomplete="off" />
+        </label>
+        <label class="grow">
+          <span>Name pattern <em>({i} = index)</em></span>
+          <input id="bot-pattern" value="Bot {i}" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="bots-start">Start bots</button>
+        <button class="btn danger" id="bots-stop" hidden>Stop bots</button>
+        <label class="toggle" title="resolve answers in the background and push them to the bots">
+          <input type="checkbox" id="bot-answers" checked /> use answers
+        </label>
+      </div>
+
+      <div class="bot-table-wrap">
+        <table class="table" id="bot-table">
+          <thead>
+            <tr><th>#</th><th>bot</th><th>state</th><th class="num">score</th><th class="num">rank</th><th class="num">q</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="empty" id="bots-empty">no bots running</p>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------- scoreboard -->
+    <section class="card" id="score-card">
+      <div class="card-head">
+        <h2>Scoreboard</h2>
+        <span class="pill" id="score-pill" hidden></span>
+      </div>
+      <p class="hint" id="score-hint">Add, remove or set points for any player — exact and instant on the local test host; planned over the remaining questions for bots.</p>
+
+      <table class="table" id="score-table">
+        <thead>
+          <tr>
+            <th class="num">#</th><th>player</th><th class="num">score</th><th class="num">correct</th>
+            <th class="adjust">adjust</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p class="empty" id="score-empty">no players yet — start a test host or bots with the PIN above</p>
+    </section>
+
+    <!-- -------------------------------------------------- activity log -->
+    <section class="card wide" id="log-card">
+      <div class="card-head">
+        <h2>Activity</h2>
+        <span class="pill" id="log-pill" hidden></span>
+      </div>
+      <div class="log" id="log"><div class="log-empty">events for the current PIN appear here</div></div>
+    </section>
+  </main>
+
+  <div id="toasts" class="toasts"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

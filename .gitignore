@@ -1,0 +1,4 @@
+node_modules/
+.kahoot-lab/
+site/
+*.log

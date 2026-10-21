@@ -1,0 +1,65 @@
+{
+  "title": "Kahoot Lab Demo Quiz",
+  "description": "Small fixture used by the local test host and the test-suite.",
+  "questions": [
+    {
+      "question": "Which planet is known as the Red Planet?",
+      "type": "quiz",
+      "time": 20000,
+      "pointsMultiplier": 1,
+      "choices": [
+        { "answer": "Venus", "correct": false },
+        { "answer": "Mars", "correct": true },
+        { "answer": "Jupiter", "correct": false },
+        { "answer": "Saturn", "correct": false }
+      ]
+    },
+    {
+      "question": "What is 7 x 8?",
+      "type": "quiz",
+      "time": 20000,
+      "pointsMultiplier": 2,
+      "choices": [
+        { "answer": "54", "correct": false },
+        { "answer": "56", "correct": true },
+        { "answer": "63", "correct": false },
+        { "answer": "48", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of these are prime numbers?",
+      "type": "multiple_select_quiz",
+      "time": 25000,
+      "pointsMultiplier": 1,
+      "choices": [
+        { "answer": "2", "correct": true },
+        { "answer": "9", "correct": false },
+        { "answer": "13", "correct": true },
+        { "answer": "21", "correct": false }
+      ]
+    },
+    {
+      "question": "Put these in order: egg laid, hatch, chick, adult",
+      "type": "jumble",
+      "time": 30000,
+      "pointsMultiplier": 1,
+      "choices": [
+        { "answer": "egg laid" },
+        { "answer": "hatch" },
+        { "answer": "chick" },
+        { "answer": "adult" }
+      ]
+    },
+    {
+      "question": "How do you feel about testing?",
+      "type": "poll",
+      "time": 15000,
+      "pointsMultiplier": 1,
+      "choices": [
+        { "answer": "Love it" },
+        { "answer": "Tolerate it" },
+        { "answer": "Automate it" }
+      ]
+    }
+  ]
+}
