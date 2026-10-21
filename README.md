@@ -155,8 +155,9 @@ while the room still has players.
 npm run build:pages        # static build -> site/
 ```
 
-The same console, deployable as a static site (`.github/workflows/pages.yml` builds
-and publishes it on every push to `main`). A static host cannot run the Node server,
+**Live demo: <https://goodgamescontact12345-wq.github.io/kahoot-lab/>** — the same
+console, deployable as a static site (`.github/workflows/pages.yml` builds and
+publishes it on every push to `main`). A static host cannot run the Node server,
 and Kahoot's APIs don't send CORS headers to third-party origins, so browsers can't
 talk to kahoot.it directly — the hosted build therefore ships an **in-browser demo
 backend** (`src/web/ui/demo-engine.js`) that implements the whole `/api/*` contract
